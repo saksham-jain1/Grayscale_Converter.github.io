@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+</head>
+<body class="bg-secondary">
+    <script src="https://kit.fontawesome.com/48e7f6b00c.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>
+    <script src= "https://www.dukelearntoprogram.com/course1/common/js/image/SimpleImage.js"></script>
+    <script>
+    var image;
+    var gray_image;
+    function upload()
+        {
+            var canvas=document.getElementById("iimg");
+            canvas.hidden=false;
+            document.getElementById('cimg').disabled=false;
+            var file=document.getElementById("finput");
+            image= new SimpleImage(file);
+            gray_image = new SimpleImage(file); 
+            image.drawTo(canvas);
+        };
+        function convert()
+        {
+            document.getElementById('arrow').hidden=false;
+            var canvas=document.getElementById("oimg");
+            canvas.hidden=false;
+            for (var pixel of gray_image.values())
+            {
+                var red= pixel.getRed();
+                var green= pixel.getGreen();
+                var blue= pixel.getBlue();
+                average= (red+green+blue)/3;
+                pixel.setRed(average);
+                pixel.setGreen(average);
+                pixel.setBlue(average);
+            }
+            gray_image.drawTo(canvas);
+        }
+    </script>
+    <div class="container d-flex justify-content-around">
+    <canvas class="col-5 bg-light mt-5" style="border: 2px solid black;height: 60vh;"hidden id="iimg">
+    </canvas>
+    <i class="fas fa-arrow-right fa-5x" id="arrow" style="margin-top: 20%;"hidden></i>
+    <canvas class="col-5 bg-light mt-5" style="border: 2px solid black;height: 60vh;"hidden id="oimg">
+    </canvas>
+    </div>
+    <center>
+    <div class="mb-5  col-5">
+        <label for="finput" id="uimg">Upload Image</label>
+        <input type="file" accept="image/*" class="form-control" id="finput" onchange="upload()">
+        <input type="button" id="cimg" value="Convert To Grayscale" onclick="convert()" class="rounded-pill mt-3 bg-info" disabled>
+    </div>
+</center>
+</body>
+</html>
